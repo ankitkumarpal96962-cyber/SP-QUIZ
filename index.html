@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Math Practice App (Class 1–8)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+    <header class="app-header">
+        <h1>Math Practice App</h1>
+        <p>Class 1–8 level based maths practice for kids</p>
+        <div class="streak-bar">
+            <span id="streakText">Streak: 0 days</span>
+            <span id="dailyGoalText">Today: 0 / 20 Q</span>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="tabs">
+        <button class="tab-btn active" data-screen="level-screen">Levels</button>
+        <button class="tab-btn" data-screen="practice-screen">Practice</button>
+        <button class="tab-btn" data-screen="tables-screen">Tables</button>
+        <button class="tab-btn" data-screen="stats-screen">Stats</button>
+    </nav>
+
+    <!-- LEVEL SCREEN -->
+    <section id="level-screen" class="screen active">
+        <!-- Level Select -->
+        <div id="level-select-screen">
+            <h2>Choose Level</h2>
+            <p class="small-text">Level 1 = Class 1 level questions, Level 8 = Class 8 level questions.</p>
+            <div id="level-grid" class="level-grid">
+                <!-- Buttons will be created by JS -->
+            </div>
+        </div>
+
+        <!-- Level Play -->
+        <div id="level-play-screen" class="hidden">
+            <div class="top-row">
+                <span id="levelInfo">Level -</span>
+                <span id="timerDisplay" class="timer">01:00</span>
+            </div>
+            <div class="progress-bar-wrap">
+                <div id="levelProgressBar" class="progress-bar"></div>
+            </div>
+
+            <p class="small-text">
+                Question <span id="levelQuestionIndex">0</span> / 
+                <span id="levelTotalQuestions">0</span>
+            </p>
+
+            <div class="question-card">
+                <div class="question-label">Current Question:</div>
+                <div id="levelQuestionText" class="question">
+                    Press "Start" to begin.
+                </div>
+                <div class="answer-row">
+                    <input type="number" id="levelAnswerInput" placeholder="Your answer">
+                    <button id="levelCheckBtn" class="btn-primary">Check</button>
+                </div>
+            </div>
+
+            <div id="levelStatusText" class="status info">
+                Each question has 1 minute. Answer before time runs out.
+            </div>
+
+            <div class="stats-row">
+                <span>Correct: <strong id="levelCorrectCount">0</strong></span>
+                <span>Wrong: <strong id="levelWrongCount">0</strong></span>
+                <span>Accuracy: <strong id="levelAccuracy">0%</strong></span>
+            </div>
+
+            <div class="button-row">
+                <button id="levelQuitBtn" class="btn-secondary">Quit Level</button>
+            </div>
+        </div>
+
+        <!-- Level Report -->
+        <div id="level-report-screen" class="hidden">
+            <h2 id="reportTitle">Level Report</h2>
+            <p id="reportSummary"></p>
+            <ul class="report-list">
+                <li>Total Questions: <span id="reportTotal"></span></li>
+                <li>Correct: <span id="reportCorrect"></span></li>
+                <li>Wrong: <span id="reportWrong"></span></li>
+                <li>Accuracy: <span id="reportAccuracy"></span></li>
+                <li>Best Accuracy (for this level): <span id="reportBestAccuracy"></span></li>
+            </ul>
+
+            <div id="reportWrongBlock" class="small-text">
+                <p>Want to practice the questions you got wrong?</p>
+            </div>
+
+            <div class="button-row">
+                <button id="reportBackBtn" class="btn-secondary">Back to Levels</button>
+                <button id="reportRetryBtn" class="btn-primary">Retry Level</button>
+                <button id="reportReviewBtn" class="btn-primary hidden">Review Wrong Qs</button>
+            </div>
+        </div>
+
+        <!-- Review Wrong Questions -->
+        <div id="level-review-screen" class="hidden">
+            <h2>Review Wrong Questions</h2>
+            <p class="small-text">
+                These are the questions you got wrong in this level. No timer, just practice.
+            </p>
+            <p class="small-text">
+                Question <span id="reviewIndex">0</span> / <span id="reviewTotal">0</span>
+            </p>
+
+            <div class="question-card">
+                <div class="question-label">Review Question:</div>
+                <div id="reviewQuestionText" class="question">-</div>
+                <p class="small-text">Correct answer: <span id="reviewCorrectAnswer">-</span></p>
+                <div class="answer-row">
+                    <input type="number" id="reviewAnswerInput" placeholder="Try again">
+                    <button id="reviewCheckBtn" class="btn-primary">Check</button>
+                </div>
+            </div>
+
+            <div id="reviewStatusText" class="status info">Try solving it again yourself.</div>
+
+            <div class="button-row">
+                <button id="reviewBackBtn" class="btn-secondary">Back to Report</button>
+                <button id="reviewNextBtn" class="btn-primary">Next Question</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRACTICE SCREEN -->
+    <section id="practice-screen" class="screen">
+        <h2>Practice Mode</h2>
+        <p class="small-text">Choose class level and operation, then practice unlimited questions.</p>
+
+        <div class="controls-row">
+            <div class="control-group">
+                <label for="practiceClass">Class Level</label>
+                <select id="practiceClass">
+                    <option value="1">Level 1 (Class 1)</option>
+                    <option value="2">Level 2 (Class 2)</option>
+                    <option value="3">Level 3 (Class 3)</option>
+                    <option value="4">Level 4 (Class 4)</option>
+                    <option value="5">Level 5 (Class 5)</option>
+                    <option value="6">Level 6 (Class 6)</option>
+                    <option value="7">Level 7 (Class 7)</option>
+                    <option value="8">Level 8 (Class 8)</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="practiceOp">Operation</label>
+                <select id="practiceOp">
+                    <option value="any">Mixed</option>
+                    <option value="add">Addition</option>
+                    <option value="sub">Subtraction</option>
+                    <option value="mul">Multiplication</option>
+                    <option value="div">Division</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-label">Practice Question:</div>
+            <div id="practiceQuestionText" class="question">Press "New Question"</div>
+            <div class="answer-row">
+                <input type="number" id="practiceAnswerInput" placeholder="Your answer">
+                <button id="practiceCheckBtn" class="btn-primary">Check</button>
+            </div>
+        </div>
+
+        <div id="practiceStatusText" class="status info">Press "New Question" to start.</div>
+
+        <div class="stats-row">
+            <span>Correct: <strong id="practiceCorrect">0</strong></span>
+            <span>Wrong: <strong id="practiceWrong">0</strong></span>
+        </div>
+
+        <div class="button-row">
+            <button id="practiceNewBtn" class="btn-secondary">New Question</button>
+            <button id="practiceResetBtn" class="btn-secondary">Reset</button>
+        </div>
+    </section>
+
+    <!-- TABLES SCREEN -->
+    <section id="tables-screen" class="screen">
+        <h2>Tables Practice</h2>
+        <p class="small-text">Choose a table and practice multiplication.</p>
+
+        <div class="controls-row">
+            <div class="control-group">
+                <label for="tableBase">Table of</label>
+                <select id="tableBase">
+                    <!-- 2 to 20 -->
+                </select>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-label">Table Question:</div>
+            <div id="tableQuestionText" class="question">Press "New Question"</div>
+            <div class="answer-row">
+                <input type="number" id="tableAnswerInput" placeholder="Your answer">
+                <button id="tableCheckBtn" class="btn-primary">Check</button>
+            </div>
+        </div>
+
+        <div id="tableStatusText" class="status info">Practice any table from 2 to 20.</div>
+
+        <div class="stats-row">
+            <span>Correct: <strong id="tableCorrect">0</strong></span>
+            <span>Wrong: <strong id="tableWrong">0</strong></span>
+        </div>
+
+        <div class="button-row">
+            <button id="tableNewBtn" class="btn-secondary">New Question</button>
+            <button id="tableResetBtn" class="btn-secondary">Reset</button>
+        </div>
+    </section>
+
+    <!-- STATS SCREEN -->
+    <section id="stats-screen" class="screen">
+        <h2>Overall Stats</h2>
+        <p class="small-text">Progress based on all level mode sessions.</p>
+
+        <div id="statsLevels"></div>
+
+        <h3>Daily Progress</h3>
+        <ul class="report-list">
+            <li>Today solved: <span id="statsTodaySolved">0</span> questions</li>
+            <li>Daily goal: <span id="statsGoal">20</span> questions</li>
+            <li>Day streak: <span id="statsStreak">0</span> days</li>
+            <li>Last practice day: <span id="statsLastDay">-</span></li>
+        </ul>
+
+        <div class="button-row">
+            <button id="statsResetBtn" class="btn-secondary">Reset All Progress</button>
+        </div>
+    </section>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
