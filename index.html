@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BMI Calculator</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="app">
+        <h1>Body Mass Index (BMI) Calculator</h1>
+
+        <div class="card">
+            <div class="input-group">
+                <label for="height">Height (cm)</label>
+                <input type="number" id="height" placeholder="Enter your height in cm" />
+            </div>
+
+            <div class="input-group">
+                <label for="weight">Weight (kg)</label>
+                <input type="number" id="weight" placeholder="Enter your weight in kg" />
+            </div>
+
+            <div class="btn-group">
+                <button id="calcBtn">Calculate BMI</button>
+                <button id="resetBtn" class="secondary">Reset</button>
+            </div>
+
+            <div id="result" class="result hidden">
+                <p>Your BMI: <span id="bmiValue">--</span></p>
+                <p>Status: <span id="bmiStatus">--</span></p>
+                <p id="bmiMessage"></p>
+            </div>
+        </div>
+
+        <h2>BMI Categories</h2>
+        <table class="bmi-table">
+            <thead>
+                <tr>
+                    <th>BMI Range</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>&lt; 18.5</td>
+                    <td>Underweight</td>
+                </tr>
+                <tr>
+                    <td>18.5 – 24.9</td>
+                    <td>Normal weight</td>
+                </tr>
+                <tr>
+                    <td>25 – 29.9</td>
+                    <td>Overweight</td>
+                </tr>
+                <tr>
+                    <td>&ge; 30</td>
+                    <td>Obese</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
